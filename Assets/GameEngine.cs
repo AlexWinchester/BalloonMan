@@ -6,7 +6,7 @@ public class GameEngine : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		// Start Game Engine Here
 	}
 	
 	// Update is called once per frame
