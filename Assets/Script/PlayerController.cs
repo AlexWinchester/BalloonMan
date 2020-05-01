@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-
-    public float speed;
+public class PlayerController : Character {
 
     private Rigidbody2D rb;
     private Vector2 moveVelocity;
