@@ -13,10 +13,16 @@ public class Character : MonoBehaviour
     public float maxHealth;
     public float currentEnergy;
     public float maxEnergy;
-    public Vector3 trajectory;
-    protected Rigidbody2D rigidBody;
-    protected Vector3 position;
-    protected Vector3 previousPosition;
+    public Vector2 trajectory;
+    public Rigidbody2D rigidBody;
+    public BoxCollider2D boxCollider;
+    protected Vector2 position;
+    protected Vector2 previousPosition;
+
+    void Start()
+    {
+
+    }
 
     void Update()
     {
@@ -38,18 +44,35 @@ public class Character : MonoBehaviour
         {
             isMoving = true;
         }
-
-        // Update trajectory
-        trajectory = GetTrajectory(transform, previousPosition);
     }
 
-    void Start()
+    /*
+     * overloaded Static methods to return Character from most unity objects
+     */
+    public static Character Get(Transform obj)
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        return obj.GetComponent<Character>();
+    }
+    public static Character Get(Rigidbody2D obj)
+    {
+        return obj.GetComponent<Character>();
+    }
+    public static Character Get(BoxCollider2D obj)
+    {
+        return obj.GetComponent<Character>();
     }
 
-    private Vector3 GetTrajectory(Transform target, Vector3 previousPosition)
+    /*
+     * Methods instantiating member variables
+     */
+     protected Rigidbody2D getRigidBody()
     {
-        return new Vector3(target.position.x - previousPosition.x, target.position.y - previousPosition.y).normalized;
+        return GetComponent<Rigidbody2D>();
     }
+
+    protected BoxCollider2D getBoxCollider()
+    {
+        return GetComponent<BoxCollider2D>();
+    }
+
 }

@@ -77,8 +77,9 @@
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
     <Compile Include="Assets\Script\Character.cs" />
-    <Compile Include="Assets\Script\EnemyFollow.cs" />
+    <Compile Include="Assets\Script\EnemyController.cs" />
     <Compile Include="Assets\Script\GameHandler.cs" />
+    <Compile Include="Assets\Script\Geometry2D.cs" />
     <Compile Include="Assets\Script\PlayerController.cs" />
     <Compile Include="Assets\Script\Structures.cs" />
     <Reference Include="Unity.Timeline.Editor">

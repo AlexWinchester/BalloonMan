@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class PlayerController : Character {
 
-    private Rigidbody2D rb;
     private Vector2 moveVelocity;
 
-    void Start(){
-
-        rb = GetComponent<Rigidbody2D>();
+    void Start() {
+        isPlayer = true;
+        speed = 3;
+        damage = 1;
+        maxHealth = 10;
+        currentHealth = maxHealth;
+        maxEnergy = 10;
+        currentEnergy = maxEnergy;
+        rigidBody = getRigidBody();
+        boxCollider = getBoxCollider();
     }
 
-    void Update(){
+    void Update() {
 
-        Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        moveVelocity = moveInput.normalized * speed;
+        trajectory = GetTrajectory();
+        moveVelocity = trajectory * speed;
+        rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.fixedDeltaTime);
     }
 
 
-    void FixedUpdate(){
+    void FixedUpdate() {
 
-        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+    }
+
+    private Vector2 GetTrajectory()
+    {
+        return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
     }
 }
