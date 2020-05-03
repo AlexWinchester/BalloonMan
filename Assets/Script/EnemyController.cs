@@ -18,6 +18,11 @@ public class EnemyController : Character
 
     public float subjectSpeed, targetSlope, targetAxisIntersect, targetSpeed = 0, numToBeSqrt, addend, denominator, x1, x2, y1, y2;
 
+    public void Construct(Sprite sprite)
+    {
+
+    }
+
     void Start()
     {
         m_previousPosition = transform.position;
