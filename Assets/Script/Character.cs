@@ -7,7 +7,10 @@ public class Character : MonoBehaviour
     public bool isHostile;
     public bool isPlayer;
     public bool isMoving;
+    public bool isBuilt;
+
     public float speed;
+
     public int damageMelee;
     public int damageRanged;
     public int attackSpeedMelee;
@@ -16,19 +19,26 @@ public class Character : MonoBehaviour
     public int maxHealth;
     public int currentEnergy;
     public int maxEnergy;
+
     public Vector2 trajectory;
+    public Vector2 moveVelocity;
+
     public Rigidbody2D rigidBody;
+
     public BoxCollider2D boxCollider;
+
     public SpriteRenderer spriteRenderer;
+
     public Sprite sprite;
-    protected Vector2 position;
+
+    public Vector2 position;
+
+    public string testString = "";
+
     protected Vector2 previousPosition;
 
     void Start()
     {
-        spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
-        (rigidBody = this.gameObject.AddComponent<Rigidbody2D>()).gravityScale = 0;
     }
 
     void Update()
@@ -51,6 +61,19 @@ public class Character : MonoBehaviour
         {
             isMoving = true;
         }
+    }
+
+    // Build Components of character
+    protected void Build()
+    {
+        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
+        rigidBody = this.gameObject.AddComponent<Rigidbody2D>();
+        rigidBody.gravityScale = 0;
+        spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprite;
+
+
+        isBuilt = true;
     }
 
     /*
@@ -108,7 +131,10 @@ public class Character : MonoBehaviour
     public Character Sprite(Sprite sprite)
     {
         this.sprite = sprite;
-        this.spriteRenderer.sprite = this.sprite;
+        if (spriteRenderer)
+        {
+            spriteRenderer.sprite = sprite;
+        }
         return this;
     }
 
@@ -126,16 +152,5 @@ public class Character : MonoBehaviour
     public static Character Get(BoxCollider2D obj)
     {
         return obj.GetComponent<Character>();
-    }
-
-    protected void Shoot(Sprite sprite, Vector2 trajectory, Vector2 position, float speed, float range, string name)
-    {
-        new GameObject(name).AddComponent<Projectile>()
-            .Sprite(sprite)
-            .Trajectory(trajectory)
-            .Position(position)
-            .Speed(speed)
-            .Damage(damage)
-            .Range(range);
     }
 }

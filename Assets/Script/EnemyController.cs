@@ -7,7 +7,6 @@ public class EnemyController : Character
     public float testTime;
     public float testDistance;
     public float testSpeed;
-    public float elapsedTime;
     public Vector2 collisionPoint;
     private Transform target;
     private Vector2 m_previousPosition;
@@ -18,25 +17,20 @@ public class EnemyController : Character
 
     public float subjectSpeed, targetSlope, targetAxisIntersect, targetSpeed = 0, numToBeSqrt, addend, denominator, x1, x2, y1, y2;
 
-    public void Construct(Sprite sprite)
-    {
-
-    }
-
     void Start()
     {
+        // Build Components
+        Build();
+
         m_previousPosition = transform.position;
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         targetPreviousPosition = target.position;
         speed = 2;
-        elapsedTime = 0;
 
     }
 
     void Update()
     {
-        testTime = Time.deltaTime;
-        elapsedTime += Time.deltaTime;
 
         collisionPoint = Geometry2D.CalculateCollisionPoint(transform, target);
 

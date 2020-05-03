@@ -17,8 +17,10 @@ public class WeaponMelee : Weapon
         
     }
 
-    public void Swing()
+    public void Swing(Vector2 trajectory)
     {
 
+
+        didAttack = true;
     }
 }

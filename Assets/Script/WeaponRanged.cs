@@ -19,26 +19,21 @@ public class WeaponRanged : Weapon
     {
         // Update Projectile Position
         projectilePosition = transform.position;
-
-        // Shoot if proper frame and pressing right click
-        if (elapsedFrames % attackSpeed == 0 && Input.GetMouseButtonDown(1))
-        {
-            Shoot(
-                new Vector2(
-                    Input.mousePosition.x - projectilePosition.x,
-                    Input.mousePosition.y - projectilePosition.y)
-                .normalized);
-        }
     }
 
-    protected void Shoot(Vector2 trajectory)
+    public void Shoot(Vector2 trajectory)
     {
-        new GameObject(name).AddComponent<Projectile>()
-            .Sprite(sprite)
-            .Trajectory(trajectory)
-            .Position(projectilePosition)
-            .Speed(projectileSpeed)
-            .Damage(damage)
-            .Range(range);
+        if (timer >= attackSpeed)
+        {
+            new GameObject(name).AddComponent<Projectile>()
+                .Sprite(sprite)
+                .Trajectory(trajectory)
+                .Position(projectilePosition)
+                .Speed(projectileSpeed)
+                .Damage(damage)
+                .Range(range);
+
+            didAttack = true;
+        }
     }
 }

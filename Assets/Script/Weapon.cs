@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public int attackSpeed, damage, range;
+    public int attackSpeed, damage, range, timer;
+    public bool didAttack;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
     public SpriteRenderer spriteRenderer;
@@ -20,7 +21,9 @@ public class Weapon : MonoBehaviour
         boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
         (rigidBody = this.gameObject.AddComponent<Rigidbody2D>()).gravityScale = 0;
 
-        elapsedFrames = 0;
+        timer = 0;
+        didAttack = false;
+        
     }
 
     // Update is called once per frame
@@ -28,12 +31,32 @@ public class Weapon : MonoBehaviour
     {
         // Move weapon with character
         rigidBody.MovePosition(rigidBody.position + character.moveVelocity * Time.deltaTime);
+    }
 
-        elapsedFrames++;
+
+    private void LateUpdate()
+    {
+        // Increment timer if character did not attack
+        if (!didAttack && timer < attackSpeed)
+        {
+            timer++;
+        }
+        else if (didAttack)
+        {
+            // Reset timer as character attacked
+            timer = 0;
+        }
+        else
+        {
+            // Timer has completed but character has not attacked
+        }
+
+        // Reset didAttack
+        didAttack = false;
     }
 
     // Fluent interface
-    public Weapon AttackSpeed(float attackSpeed)
+    public Weapon AttackSpeed(int attackSpeed)
     {
         this.attackSpeed = attackSpeed;
         return this;

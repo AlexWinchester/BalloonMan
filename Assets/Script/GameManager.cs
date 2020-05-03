@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public float elapsedTime;
     public int currentFrame, enemySpawnRate;
     public bool isDragging = false;
+    public Vector2 enemySpawnPoint;
+
+    public string testString;
 
     public Sprite enemySprite;
 
@@ -53,33 +56,51 @@ public class GameManager : MonoBehaviour
         if (currentFrame % enemySpawnRate == 0) {
 
             // Spawn enemy
+            enemySpawnPoint = GetRandomLocation();
             spawnEnemy(
-                new Vector2(Random.value * halfWidth * 2 - halfWidth, Random.value * halfHeight * 2 - halfHeight),
+                GetRandomLocation(),
                 enemySprite,
                 "SpawnedEnemy");
         }
 
+        
+    }
+
+    private void LateUpdate()
+    {
         // Increment current frame
-        currentFrame += 1;
+        currentFrame++;
+
         // Increment elapsed time
         elapsedTime += Time.deltaTime;
     }
 
-    private void spawnEnemy(Vector2 location, Sprite sprite, string name)
+    private GameObject spawnEnemy(Vector2 location, Sprite sprite, string name)
     {
-        // Helper Variables
-        Vector2 spawnPoint;
-
+       
         // Create Game Object
         GameObject enemy = new GameObject(name);
 
+        // Set position
+        enemy.transform.position = location;
+
         // Create Components
-        EnemyController enemyController = enemy.AddComponent<EnemyController>().Sprite(sprite) as EnemyController;
+        EnemyController enemyController = enemy.AddComponent<EnemyController>();
+        
+        enemyController.Sprite(sprite);
+
+
 
         // Set position
-        spawnPoint = location;
-        enemy.transform.position = spawnPoint;
+        //enemyController.rigidBody.MovePosition(location);
 
+        return enemy;
+
+    }
+
+    private Vector2 GetRandomLocation()
+    {
+        return new Vector2(Random.value * halfWidth * 2 - halfWidth, Random.value * halfHeight * 2 - halfHeight);
     }
 
 }
