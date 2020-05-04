@@ -13,6 +13,9 @@ public class Character : Object
     public int currentEnergy;
     public int maxEnergy;
 
+    public Rigidbody2D rigidBody;
+    public BoxCollider2D boxCollider;
+
     public WeaponMelee weaponMelee;
     public WeaponRanged weaponRanged;
     public string testString = "";
@@ -33,16 +36,30 @@ public class Character : Object
         base.Update();
     }
 
+    protected override void FixedUpdate()
+    {
+    }
+
     // Called after all Update methods have completed
     protected override void LateUpdate()
     {
         base.LateUpdate();
     }
 
-
-    protected GameObject EquipWeaponMelee(Character character, int attackSpeed, int damage, int range, Sprite sprite)
+    protected override void Build()
     {
-        GameObject gameObject = new GameObject("name");
+        base.Build();
+
+        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
+        rigidBody = this.gameObject.AddComponent<Rigidbody2D>();
+        rigidBody.gravityScale = 0;
+        rigidBody.freezeRotation = true;
+    }
+
+
+    protected GameObject EquipWeaponMelee(string name, Character character, int attackSpeed, int damage, int range, Sprite sprite)
+    {
+        GameObject gameObject = new GameObject(name);
         weaponMelee = gameObject.AddComponent<WeaponMelee>();
         weaponMelee.Character(character)
             .AttackSpeed(attackSpeed)
@@ -53,9 +70,9 @@ public class Character : Object
         return gameObject;
     }
 
-    protected GameObject EquipWeaponRanged(Character character, int attackSpeed, int damage, int range, float speedProjectile, Sprite sprite, Sprite spriteProjectile)
+    protected GameObject EquipWeaponRanged(string name, Character character, int attackSpeed, int damage, int range, float speedProjectile, Sprite sprite, Sprite spriteProjectile)
     {
-        GameObject gameObject = new GameObject("name");
+        GameObject gameObject = new GameObject(name);
         weaponRanged = gameObject.AddComponent<WeaponRanged>();
         weaponRanged.Character(character)
             .AttackSpeed(attackSpeed)

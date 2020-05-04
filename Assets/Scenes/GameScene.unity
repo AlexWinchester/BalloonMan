@@ -564,7 +564,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918785891}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.62, y: -0.28, z: -10}
+  m_LocalPosition: {x: 4.62, y: -0.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -598,6 +598,8 @@ MonoBehaviour:
   maxHealth: 0
   currentEnergy: 0
   maxEnergy: 0
+  rigidBody: {fileID: 0}
+  boxCollider: {fileID: 0}
   weaponMelee: {fileID: 0}
   weaponRanged: {fileID: 0}
   testString: 

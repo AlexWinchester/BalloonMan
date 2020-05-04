@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : Object
 {
     public int attackSpeed, damage, range, timer;
+    public Vector2 positionOffset;
     public bool didAttack;
     public Character character;
 
@@ -21,6 +22,7 @@ public class Weapon : Object
     {
         base.Start();
 
+        // Initialize Variables
         timer = 0;
         didAttack = false;
         
@@ -29,9 +31,14 @@ public class Weapon : Object
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+
         // Move weapon with character
-        rigidBody.MovePosition(rigidBody.position + character.moveVelocity * Time.deltaTime);
+        // rigidBody.MovePosition(rigidBody.position + character.moveVelocity * Time.deltaTime);
+        transform.position = character.position + positionOffset;
     }
 
 
@@ -86,6 +93,7 @@ public class Weapon : Object
     public Weapon Character(Character  character)
     {
         this.character = character;
+        transform.position = character.position;
         return this;
     }
 }

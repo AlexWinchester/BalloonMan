@@ -33,13 +33,9 @@ public class PlayerController : Character {
 
         // Weapons (Will be grabbed by database later)
 
-        EquipWeaponMelee(this, 50, 2, 1, spriteWeaponMelee);
-        EquipWeaponRanged(this, 100, 1, 5, 2, spriteWeaponRanged, spriteProjectile);
-
-        weaponRanged.AttackSpeed(200)
-            .Damage(1)
-            .Range(5)
-            .Sprite(spriteWeaponRanged);
+        EquipWeaponMelee("Sword", this, 50, 2, 1, spriteWeaponMelee);
+        EquipWeaponRanged("Gun", this, 100, 1, 5, 2, spriteWeaponRanged, spriteProjectile);
+        weaponRanged.projectileName = "bullet";
     }
 
     protected override void Update() {
@@ -56,7 +52,7 @@ public class PlayerController : Character {
     }
 
 
-    void FixedUpdate() {
+    protected override void FixedUpdate() {
         // Move Player with keyboard
         trajectory = GetTrajectory();
         moveVelocity = trajectory * speed;

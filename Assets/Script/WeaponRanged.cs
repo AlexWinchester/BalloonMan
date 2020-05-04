@@ -19,6 +19,9 @@ public class WeaponRanged : Weapon
     protected override void Start()
     {
         base.Start();
+
+        // Set placement
+        transform.position = transform.position + new Vector3(0, 0, 1);
     }
 
     // Update is called once per frame
@@ -38,7 +41,7 @@ public class WeaponRanged : Weapon
     {
         if (timer >= attackSpeed)
         {
-            new GameObject(name).AddComponent<Projectile>()
+            new GameObject(projectileName).AddComponent<Projectile>()
                 .Sprite(spriteProjectile)
                 .Trajectory(trajectory)
                 .Position(projectilePosition)

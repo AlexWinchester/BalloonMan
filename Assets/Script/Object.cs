@@ -36,6 +36,11 @@ public class Object : MonoBehaviour
         position = transform.position;
     }
 
+    protected virtual void FixedUpdate()
+    {
+
+    }
+
     // Called after all Update methods have completed
     protected virtual void LateUpdate()
     {
@@ -53,12 +58,8 @@ public class Object : MonoBehaviour
         }
     }
 
-    protected void Build()
+    protected virtual void Build()
     {
-        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
-        rigidBody = this.gameObject.AddComponent<Rigidbody2D>();
-        rigidBody.gravityScale = 0;
-        rigidBody.freezeRotation = true;
         spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
         if (sprite)
         {

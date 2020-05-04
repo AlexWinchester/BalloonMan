@@ -2,22 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : Object
 {
     
     public float speed, damage, range, distanceTraveled;
     public int type; // different int for damage types
-    public Sprite sprite;
-    public Vector2 trajectory;
-    public Vector2 position;
-    public Rigidbody2D rigidBody;
-    public BoxCollider2D boxCollider;
-    public SpriteRenderer spriteRenderer;
 
     public void Construct(Sprite sprite, Vector2 trajectory, Vector2 position, float speed, float damage, float range)
     {
         this.sprite = sprite;
-        this.trajectory = trajectory;
+        this.trajectory = trajectory.normalized;
         this.transform.position = position;
         spriteRenderer.sprite = sprite;
         this.speed = speed;
@@ -25,9 +19,15 @@ public class Projectile : MonoBehaviour
         this.range = range;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    // Start is called before the first frame update
+    protected override void Start()
+    {
+        base.Start();
         // Initialize variables
         speed = 0;
         damage = 0;
@@ -35,21 +35,18 @@ public class Projectile : MonoBehaviour
         distanceTraveled = 0;
         type = 0;
 
-        // Add Components
-        spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
-        (rigidBody = this.gameObject.AddComponent<Rigidbody2D>()).gravityScale = 0;
-
 
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         if (distanceTraveled <= range)
         {
             // Move towards trajectory
-            rigidBody.MovePosition(rigidBody.position + trajectory * speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, transform.position + (Vector3)trajectory * speed * Time.fixedDeltaTime , speed * Time.fixedDeltaTime);
+            //rigidBody.MovePosition(rigidBody.position + trajectory * speed * Time.fixedDeltaTime);
         }
         else
         {
@@ -74,7 +71,7 @@ public class Projectile : MonoBehaviour
 
     public Projectile Trajectory(Vector2 trajectory)
     {
-        this.trajectory = trajectory;
+        this.trajectory = trajectory.normalized;
         return this;
     }
 
