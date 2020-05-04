@@ -4,38 +4,37 @@ using UnityEngine;
 
 public class PlayerController : Character {
 
-    public WeaponMelee weaponMelee;
-    public WeaponRanged weaponRanged;
     public Sprite spriteWeaponMelee;
     public Sprite spriteWeaponRanged;
+    public Sprite spriteProjectile;
 
-    private int swingTimerMelee;
-    private int swingTimerRanged;
-    private bool didSwing;
-    private bool didShoot;
+    //Awake is called as soon as component is added to GameObject
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
-    void Start() {
-        // Build Components
-        Build();
+    protected override void Start() {
+        base.Start();
 
-        isPlayer = true;
+        this.isPlayer = true;
         speed = 3;
-        attackSpeedMelee = 50;
-        attackSpeedRanged = 100;
         maxHealth = 10;
         currentHealth = maxHealth;
         maxEnergy = 10;
         currentEnergy = maxEnergy;
-        swingTimerRanged = 0;
 
         // Set Sprite
         this.Sprite(Resources.Load<Sprite>("Sprites/balloon_man_revised"));
 
-        // Weapons
-        weaponMelee.AttackSpeed(100)
-            .Damage(2)
-            .Range(1)
-            .Sprite(spriteWeaponMelee);
+        spriteWeaponMelee = Resources.Load<Sprite>("Sprites/Sword");
+        spriteWeaponRanged = Resources.Load<Sprite>("Sprites/Gun");
+        spriteProjectile = Resources.Load<Sprite>("Sprites/Circle");
+
+        // Weapons (Will be grabbed by database later)
+
+        EquipWeaponMelee(this, 50, 2, 1, spriteWeaponMelee);
+        EquipWeaponRanged(this, 100, 1, 5, 2, spriteWeaponRanged, spriteProjectile);
 
         weaponRanged.AttackSpeed(200)
             .Damage(1)
@@ -43,28 +42,27 @@ public class PlayerController : Character {
             .Sprite(spriteWeaponRanged);
     }
 
-    void Update() {
-
+    protected override void Update() {
+        base.Update();
         // Check attacks
         CheckMeleeSwing();
         CheckRangedShoot();
 
-        // Move Player with keyboard
-        trajectory = GetTrajectory();
-        moveVelocity = trajectory * speed;
-        rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.deltaTime);
-
     }
 
-    void LateUpdate()
+    protected override void LateUpdate()
     {
-        
+        base.LateUpdate();
     }
 
 
     void FixedUpdate() {
-
+        // Move Player with keyboard
+        trajectory = GetTrajectory();
+        moveVelocity = trajectory * speed;
+        rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.fixedDeltaTime);
     }
+
 
     private Vector2 GetTrajectory()
     {

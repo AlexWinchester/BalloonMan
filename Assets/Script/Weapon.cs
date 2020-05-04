@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Weapon : Object
 {
     public int attackSpeed, damage, range, timer;
     public bool didAttack;
-    public Rigidbody2D rigidBody;
-    public BoxCollider2D boxCollider;
-    public SpriteRenderer spriteRenderer;
-    public Sprite sprite;
     public Character character;
 
     protected int elapsedFrames;
 
-    // Start is called before the first frame update
-    void Start()
+    //Awake is called as soon as component is added to GameObject
+    protected override void Awake()
     {
-        spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
-        (rigidBody = this.gameObject.AddComponent<Rigidbody2D>()).gravityScale = 0;
+        base.Awake();
+    }
+
+    // Start is called before the first frame update
+    protected override void Start()
+    {
+        base.Start();
 
         timer = 0;
         didAttack = false;
@@ -27,15 +27,17 @@ public class Weapon : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         // Move weapon with character
         rigidBody.MovePosition(rigidBody.position + character.moveVelocity * Time.deltaTime);
     }
 
 
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
+        base.LateUpdate();
         // Increment timer if character did not attack
         if (!didAttack && timer < attackSpeed)
         {

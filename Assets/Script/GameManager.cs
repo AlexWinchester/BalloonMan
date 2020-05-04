@@ -87,12 +87,8 @@ public class GameManager : MonoBehaviour
         // Create Components
         EnemyController enemyController = enemy.AddComponent<EnemyController>();
         
+        // Attach sprite
         enemyController.Sprite(sprite);
-
-
-
-        // Set position
-        //enemyController.rigidBody.MovePosition(location);
 
         return enemy;
 

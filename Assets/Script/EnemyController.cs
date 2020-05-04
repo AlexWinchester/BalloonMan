@@ -17,10 +17,15 @@ public class EnemyController : Character
 
     public float subjectSpeed, targetSlope, targetAxisIntersect, targetSpeed = 0, numToBeSqrt, addend, denominator, x1, x2, y1, y2;
 
-    void Start()
+    //Awake is called as soon as component is added to GameObject
+    protected override void Awake()
     {
-        // Build Components
-        Build();
+        base.Awake();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         m_previousPosition = transform.position;
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -29,9 +34,9 @@ public class EnemyController : Character
 
     }
 
-    void Update()
+    protected override void Update()
     {
-
+        base.Update();
         collisionPoint = Geometry2D.CalculateCollisionPoint(transform, target);
 
 
@@ -40,5 +45,10 @@ public class EnemyController : Character
         m_previousPosition = transform.position;
         targetPreviousPosition = target.position;
 
+    }
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
     }
 }

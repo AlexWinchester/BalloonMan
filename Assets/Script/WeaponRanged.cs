@@ -6,19 +6,32 @@ public class WeaponRanged : Weapon
 {
     public Vector2 projectilePosition;
     public string projectileName;
-    public int projectileSpeed;
+    public float speedProjectile;
+    public Sprite spriteProjectile;
+
+    //Awake is called as soon as component is added to GameObject
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         // Update Projectile Position
         projectilePosition = transform.position;
+    }
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
     }
 
     public void Shoot(Vector2 trajectory)
@@ -26,14 +39,27 @@ public class WeaponRanged : Weapon
         if (timer >= attackSpeed)
         {
             new GameObject(name).AddComponent<Projectile>()
-                .Sprite(sprite)
+                .Sprite(spriteProjectile)
                 .Trajectory(trajectory)
                 .Position(projectilePosition)
-                .Speed(projectileSpeed)
+                .Speed(speedProjectile)
                 .Damage(damage)
                 .Range(range);
 
             didAttack = true;
         }
     }
+
+    public WeaponRanged SpriteProjectile(Sprite sprite)
+    {
+        spriteProjectile = sprite;
+        return this;
+    }
+
+    public WeaponRanged SpeedProjectile(float speed)
+    {
+        speedProjectile = speed;
+        return this;
+    }
+
 }

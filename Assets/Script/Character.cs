@@ -2,78 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : Object
 {
     public bool isHostile;
     public bool isPlayer;
-    public bool isMoving;
-    public bool isBuilt;
-
+   
     public float speed;
-
-    public int damageMelee;
-    public int damageRanged;
-    public int attackSpeedMelee;
-    public int attackSpeedRanged;
     public int currentHealth;
     public int maxHealth;
     public int currentEnergy;
     public int maxEnergy;
 
-    public Vector2 trajectory;
-    public Vector2 moveVelocity;
-
-    public Rigidbody2D rigidBody;
-
-    public BoxCollider2D boxCollider;
-
-    public SpriteRenderer spriteRenderer;
-
-    public Sprite sprite;
-
-    public Vector2 position;
-
+    public WeaponMelee weaponMelee;
+    public WeaponRanged weaponRanged;
     public string testString = "";
 
-    protected Vector2 previousPosition;
-
-    void Start()
+    //Awake is called as soon as component is added to GameObject
+    protected override void Awake()
     {
+        base.Awake();
     }
 
-    void Update()
+    protected override void Start()
     {
-        position = transform.position;
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
 
     // Called after all Update methods have completed
-    void LateUpdate()
+    protected override void LateUpdate()
     {
-        // Update Previous Position
-        previousPosition = position;
-        
-        // Check if character is moving
-        if (position == previousPosition)
-        {
-            isMoving = false;
-        }
-        else
-        {
-            isMoving = true;
-        }
+        base.LateUpdate();
     }
 
-    // Build Components of character
-    protected void Build()
+
+    protected GameObject EquipWeaponMelee(Character character, int attackSpeed, int damage, int range, Sprite sprite)
     {
-        boxCollider = this.gameObject.AddComponent<BoxCollider2D>();
-        rigidBody = this.gameObject.AddComponent<Rigidbody2D>();
-        rigidBody.gravityScale = 0;
-        spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = sprite;
+        GameObject gameObject = new GameObject("name");
+        weaponMelee = gameObject.AddComponent<WeaponMelee>();
+        weaponMelee.Character(character)
+            .AttackSpeed(attackSpeed)
+            .Damage(damage)
+            .Range(range)
+            .Sprite(sprite);
 
+        return gameObject;
+    }
 
-        isBuilt = true;
+    protected GameObject EquipWeaponRanged(Character character, int attackSpeed, int damage, int range, float speedProjectile, Sprite sprite, Sprite spriteProjectile)
+    {
+        GameObject gameObject = new GameObject("name");
+        weaponRanged = gameObject.AddComponent<WeaponRanged>();
+        weaponRanged.Character(character)
+            .AttackSpeed(attackSpeed)
+            .Damage(damage)
+            .Range(range)
+            .Sprite(sprite);
+        weaponRanged.SpriteProjectile(spriteProjectile)
+            .SpeedProjectile(speedProjectile);
+
+        return gameObject;
     }
 
     /*
@@ -95,18 +87,6 @@ public class Character : MonoBehaviour
     public Character Speed(float speed)
     {
         this.speed = speed;
-        return this;
-    }
-
-    public Character DamageMelee(int damage)
-    {
-        this.damageMelee = damage;
-        return this;
-    }
-
-    public Character DamageRanged(int damage)
-    {
-        this.damageRanged = damage;
         return this;
     }
 
