@@ -9,20 +9,25 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     private Vector2 moveVelocity;
 
-    void Start(){
+    private Animator anim;
 
+    void Start() {
+
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update(){
+    void Update() {
 
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         moveVelocity = moveInput.normalized * speed;
+
     }
 
 
-    void FixedUpdate(){
+    void FixedUpdate() {
 
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+
     }
 }
